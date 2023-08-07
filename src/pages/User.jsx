@@ -1,9 +1,13 @@
 import React from 'react'
+import { useEffect } from 'react';
 
 import EntryItem from '../components/EntryItem'
 
 // Composant User
 function User() {
+
+  useEffect(() => { document.title = "Argent Bank - My profile" })
+
   return (
     <main className="main bg-dark">
       <div className="header">

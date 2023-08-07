@@ -1,8 +1,12 @@
 import React from 'react'
+import { useEffect } from 'react'
 
 import FeatureItem from '../components/FeatureItem'
 
 function Home() {
+
+  useEffect(() => { document.title = "Argent Bank - Home Page" })
+
   return (
     <main>
       <div className="hero">
