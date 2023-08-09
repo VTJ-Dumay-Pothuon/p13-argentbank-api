@@ -24,18 +24,12 @@ export const loginFailure = error => ({
 export const loginUser = (email, password) => {
   return dispatch => {
     dispatch(loginRequest());
-    console.log({
-      email,
-      password,
-    });
     axios
-      .post('http://localhost:3001/user/login', {
+      .post('http://localhost:3001/api/v1/user/login', {
         email,
         password,
       })
       .then(response => {
-        console.log(response.data);
-        console.log(email, password);
         const token = response.data.token;
         dispatch(loginSuccess(token));
       })
