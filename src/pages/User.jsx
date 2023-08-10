@@ -13,12 +13,6 @@ function User() {
     dispatch(fetchUserProfile())
   }, [dispatch]);
 
-  // Affichez les données récupérées dans la console
-  useEffect(() => {
-    if (profileData) {
-      console.log('Profile Data:', profileData)
-    }
-  }, [profileData]);
   return (
     <main className="main bg-dark">
       <div className="header">
