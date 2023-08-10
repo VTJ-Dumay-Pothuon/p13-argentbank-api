@@ -1,17 +1,28 @@
-import React from 'react'
-import { useEffect } from 'react';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUserProfile } from '../actions/profile.action'
 
 import EntryItem from '../components/EntryItem'
 
-// Composant User
 function User() {
+  const dispatch = useDispatch()
+  const { profileData } = useSelector(state => state.profile)
 
-  useEffect(() => { document.title = "Argent Bank - My profile" })
+  useEffect(() => {
+    document.title = "Argent Bank - My profile"
+    dispatch(fetchUserProfile())
+  }, [dispatch]);
 
+  // Affichez les données récupérées dans la console
+  useEffect(() => {
+    if (profileData) {
+      console.log('Profile Data:', profileData)
+    }
+  }, [profileData]);
   return (
     <main className="main bg-dark">
       <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
+        <h1>Welcome back<br />{profileData?.body.firstName} {profileData?.body.lastName}!</h1>
         <button className="edit-button">Edit Name</button>
       </div>
       <h2 className="sr-only">Accounts</h2>
@@ -47,6 +58,6 @@ function User() {
       </section>
     </main>
   );
-}
+};
 
-export default User;
+export default User

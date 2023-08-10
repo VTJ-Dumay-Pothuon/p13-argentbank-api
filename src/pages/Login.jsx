@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../actions/login.action';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import { loginUser } from '../actions/login.action'
 
 function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
-    const dispatch = useDispatch();
-    const { loading, token, error } = useSelector(state => state.login);
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { loading, token, error } = useSelector(state => state.login)
 
-    useEffect(() => { document.title = "Argent Bank - Sign in" }, []);
+    useEffect(() => {
+      document.title = "Argent Bank - Sign in"
+      if (token) { navigate('/user') }
+    }, [token]);
 
     const handleLogin = e => {
-        e.preventDefault();
-        dispatch(loginUser(username, password));
+        e.preventDefault()
+        dispatch(loginUser(username, password))
     };
 
     return (
@@ -49,10 +56,18 @@ function Login() {
             </button>
           </form>
           {error && <p>{error}</p>}
-          {token && <p>Login successful! Token: {token}</p>}
         </section>
       </main>
     );
   }
 
-export default Login;
+Login.propTypes = {
+  username: PropTypes.string,
+  password: PropTypes.string,
+  loading: PropTypes.bool,
+  token: PropTypes.string,
+  error: PropTypes.string,
+  dispatch: PropTypes.func
+};
+
+export default Login
