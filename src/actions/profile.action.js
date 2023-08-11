@@ -31,6 +31,8 @@ export const fetchUserProfile = () => {
       dispatch(fetchProfileRequest())
   
       const token = jsCookie.get('token')
+
+      if (!token) { return }
   
       axios.post('http://localhost:3001/api/v1/user/profile', null, {
         headers: {Authorization: `Bearer ${token}`}
