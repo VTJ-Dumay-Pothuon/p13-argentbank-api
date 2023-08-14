@@ -9,6 +9,7 @@ import '../styles/Login.scss'
 function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [rememberMe, setRememberMe] = useState(false);
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -21,7 +22,7 @@ function Login() {
 
     const handleLogin = e => {
         e.preventDefault()
-        dispatch(loginUser(username, password))
+        dispatch(loginUser(username, password, rememberMe))
     };
 
     return (
@@ -49,7 +50,12 @@ function Login() {
               />
             </div>
             <div className="input-remember">
-              <input type="checkbox" id="remember-me" />
+              <input
+                type="checkbox"
+                id="remember-me"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
               <label htmlFor="remember-me">Remember me</label>
             </div>
             <button type="submit" className="sign-in-button" disabled={loading}>

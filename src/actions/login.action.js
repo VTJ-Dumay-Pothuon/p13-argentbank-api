@@ -19,7 +19,7 @@ export const loginFailure = error => ({
 });
 
 // Async action to perform login
-export const loginUser = (email, password) => {
+export const loginUser = (email, password, rememberMe) => {
 
   return dispatch => {
     dispatch(loginRequest())
@@ -28,7 +28,7 @@ export const loginUser = (email, password) => {
       .then(response => {
         const token = response.data.body.token
         import('js-cookie').then(jsCookie => {
-          jsCookie.default.set('token', token, { expires: 7, sameSite: 'none', secure: true })
+          jsCookie.default.set('token', token, { expires: (rememberMe?7:1), sameSite: 'none', secure: true })
         });
         dispatch(loginSuccess(token))
       })
