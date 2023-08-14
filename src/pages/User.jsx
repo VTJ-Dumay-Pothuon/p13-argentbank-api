@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserProfile, updateUserProfile } from '../actions/profile.action'
 
 import EntryItem from '../components/EntryItem'
+import '../styles/User.scss'
 
 function User() {
   const dispatch = useDispatch()

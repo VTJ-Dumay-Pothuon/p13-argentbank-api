@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { loginUser } from '../actions/login.action'
+import '../styles/Login.scss'
 
 function Login() {
     const [username, setUsername] = useState('')

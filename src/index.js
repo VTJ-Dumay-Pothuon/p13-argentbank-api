@@ -13,7 +13,7 @@ import User from './pages/User'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
-import './styles/main.css';
+import './styles/_main.scss';
 
 const store = configureStore({
   reducer: rootReducer, // Passez le rootReducer ici

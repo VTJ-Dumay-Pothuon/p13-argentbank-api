@@ -5,6 +5,7 @@ import { fetchUserProfile } from '../actions/profile.action'
 import { logout } from '../actions/logout.action'
 
 import argentBankLogo from '../assets/images/argentBankLogo.png'
+import '../styles/Header.scss'
 
 function Header() {
   const dispatch = useDispatch();

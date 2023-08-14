@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 
 import FeatureItem from '../components/FeatureItem'
+import '../styles/Home.scss'
 
 function Home() {
 

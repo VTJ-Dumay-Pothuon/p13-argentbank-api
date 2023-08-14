@@ -1,0 +1,30 @@
+@import '__variables';
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    a {
+      font-weight: bold;
+      color: $main-color;
+      cursor: pointer;
+      &.router-link-exact-active {
+        color: $link-color;
+      }
+    }
+    &-item {
+      text-decoration: none;
+      margin-right: 0.5rem;
+      .fa { margin: 0 0.28rem }
+      &:hover { text-decoration: underline }
+    }
+    &-logo {
+      display: flex;
+      align-items: center;
+      &-image {
+        max-width: 100%;
+        width: 200px;
+      }
+    }
+}
