@@ -70,6 +70,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
       produces:
         - application/json
       responses:
@@ -93,6 +94,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
         - in: body
           name: body
           description: Update user profile attributes
@@ -110,6 +112,154 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
+  /transaction/get/all :
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: All transactions
+      description: API for getting all transactions for the user
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User transactions retrieved successully
+          schema:
+            $ref: '#/definitions/transactionResponse'
+        '401':
+          description: Unauthorized (token issue)
+        '500':
+          description: Internal Server Error
+  /transaction/get/:id :
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: One transaction from URL id
+      description: API for displaying one transaction from its id
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction retrieved successully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '403':
+          description: user id (from token) mismatch with transaction.ownerid 
+        '404':
+          description: Transaction with ID :id not found in database
+        '500':
+          description: Internal Server Error
+  /transaction/create :
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: One transaction from URL id
+      description: API for creating a new transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Create a new transaction
+          required: true
+          schema:
+            $ref: '#/definitions/SetTransaction'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction created successully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '401':
+          description: Unauthorized (token issue)
+        '403':
+          description: user id (from token) mismatch with transaction.ownerid 
+        '500':
+          description: Internal Server Error
+  /transaction/edit/:id :
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: One transaction from URL id
+      description: API for updating one transaction from its id
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Create a new transaction
+          required: true
+          schema:
+            $ref: '#/definitions/SetTransaction'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction updated successully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '401':
+          description: Unauthorized (token issue)
+        '403':
+          description: user id (from token) mismatch with transaction.ownerid 
+        '404':
+          description: Transaction with ID :id not found in database
+        '500':
+          description: Internal Server Error
+  /transaction/delete/:id :
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: One transaction from URL id
+      description: API for deleting one transaction from its id
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction deleted successully
+        '401':
+          description: Unauthorized (token issue)
+        '403':
+          description: user id (from token) mismatch with transaction.ownerid 
+        '404':
+          description: Transaction with ID :id not found in database
+        '500':
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -118,6 +268,8 @@ securityDefinitions:
 definitions:
   User:
     properties:
+      id:
+        type: string
       email:
         type: string
         description: user email
@@ -157,10 +309,46 @@ definitions:
     properties:
       token:
         type: string
+  TransactionsResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          transactions:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
   UserProfile:
     type: object
     properties:
       firstName:
         type: string
       lastName:
+        type: string
+  SetTransaction:
+    type: object
+    properties:
+      title:
+        type: string
+      amount:
+        type: number
+      description:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+      ownerid:
+        $ref: '#/definitions/User/properties/id'
+      title:
+        type: string
+      amount:
+        type: number
+      description:
         type: string
