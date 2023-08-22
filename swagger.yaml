@@ -113,7 +113,7 @@ paths:
         '500':
           description: Internal Server Error
 
-  /transaction/get/all :
+  /transactions/all :
     get:
       security:
         - Bearer: []
@@ -133,13 +133,13 @@ paths:
         '200':
           description: User transactions retrieved successully
           schema:
-            $ref: '#/definitions/transactionResponse'
+            $ref: '#/definitions/TransactionsResponse'
         '401':
           description: Unauthorized (token issue)
         '500':
           description: Internal Server Error
-  /transaction/get/:id :
-    get:
+  /transactions/get :
+    post:
       security:
         - Bearer: []
       tags:
@@ -152,6 +152,12 @@ paths:
           description: Attach Bearer JWT token
           required: true
           type: string
+        - in: body
+          name: ID
+          description: the transaction's ID
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionID'
       produces:
         - application/json
       responses:
@@ -165,7 +171,7 @@ paths:
           description: Transaction with ID :id not found in database
         '500':
           description: Internal Server Error
-  /transaction/create :
+  /transactions/create :
     post:
       security:
         - Bearer: []
@@ -198,7 +204,7 @@ paths:
           description: user id (from token) mismatch with transaction.ownerid 
         '500':
           description: Internal Server Error
-  /transaction/edit/:id :
+  /transactions/edit :
     put:
       security:
         - Bearer: []
@@ -217,7 +223,7 @@ paths:
           description: Create a new transaction
           required: true
           schema:
-            $ref: '#/definitions/SetTransaction'
+            $ref: '#/definitions/Transaction'
       produces:
         - application/json
       responses:
@@ -233,7 +239,7 @@ paths:
           description: Transaction with ID :id not found in database
         '500':
           description: Internal Server Error
-  /transaction/delete/:id :
+  /transactions/delete :
     delete:
       security:
         - Bearer: []
@@ -247,6 +253,12 @@ paths:
           description: Attach Bearer JWT token
           required: true
           type: string
+        - in: body
+          name: ID
+          description: the transaction's ID
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionID'
       produces:
         - application/json
       responses:
@@ -351,4 +363,9 @@ definitions:
       amount:
         type: number
       description:
+        type: string
+  TransactionID:
+    type: object
+    properties:
+      id:
         type: string
