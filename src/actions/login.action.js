@@ -33,7 +33,11 @@ export const loginUser = (email, password, rememberMe) => {
         dispatch(loginSuccess(token))
       })
       .catch(error => {
-        dispatch(loginFailure(error.message))
+        if (error.response && error.response.data) {
+          dispatch(loginFailure(error.response.data.message));
+        } else {
+          dispatch(loginFailure('An error occurred while logging in.'));
+        }
       });
   };
 };

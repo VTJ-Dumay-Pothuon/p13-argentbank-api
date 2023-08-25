@@ -7,7 +7,7 @@ import { loginUser } from '../actions/login.action'
 import '../styles/Login.scss'
 
 function Login() {
-    const [username, setUsername] = useState('')
+    const [email, setemail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false);
 
@@ -22,7 +22,7 @@ function Login() {
 
     const handleLogin = e => {
         e.preventDefault()
-        dispatch(loginUser(username, password, rememberMe))
+        dispatch(loginUser(email, password, rememberMe))
     };
 
     return (
@@ -32,12 +32,12 @@ function Login() {
           <h1>Sign In</h1>
           <form onSubmit={handleLogin}>
             <div className="input-wrapper">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="text"
-                id="username"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
+                id="email"
+                value={email}
+                onChange={e => setemail(e.target.value)}
               />
             </div>
             <div className="input-wrapper">
@@ -62,14 +62,14 @@ function Login() {
               {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
-          {error && <p>{error}</p>}
+          {error && <p className="error">{error}</p>}
         </section>
       </main>
     );
   }
 
 Login.propTypes = {
-  username: PropTypes.string,
+  email: PropTypes.string,
   password: PropTypes.string,
   loading: PropTypes.bool,
   token: PropTypes.string,
