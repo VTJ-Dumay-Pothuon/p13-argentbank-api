@@ -113,6 +113,42 @@ paths:
         '500':
           description: Internal Server Error
 
+
+  /account :
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Account Module
+      summary: User account
+      description: API for displaying one account from one user, and access its transactions
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: ID
+          description: the transaction's ID
+          required: true
+          schema:
+            $ref: '#/definitions/UserID'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction retrieved successully
+          schema:
+            $ref: '#/definitions/Account'
+        '403':
+          description: You are not allowed to access this account
+        '404':
+          description: User with ID :id not found in database
+        '500':
+          description: Internal Server Error
+
+
   /transactions/all :
     get:
       security:
@@ -345,12 +381,13 @@ definitions:
   SetTransaction:
     type: object
     properties:
-      title:
+      date:
+        type: object
+        description: Date object
+      description:
         type: string
       amount:
         type: number
-      description:
-        type: string
   Transaction:
     type: object
     properties:
@@ -358,14 +395,38 @@ definitions:
         type: string
       ownerid:
         $ref: '#/definitions/User/properties/id'
-      title:
+      date:
+        type: object
+        description: Date object
+      description:
         type: string
       amount:
         type: number
-      description:
-        type: string
   TransactionID:
     type: object
+    description: ID of an existing transaction
     properties:
       id:
-        type: string
+        $ref: '#/definitions/Transaction/properties/id'
+  UserID:
+    type: object
+    description: ID of an existing user
+    properties:
+      id:
+        $ref: '#/definitions/User/properties/id'
+  Account:
+    type: object
+    properties:
+      transactions:
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          transactions:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+          balance:
+            type: number
+  
