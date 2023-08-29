@@ -60,3 +60,11 @@
       .transaction-button { width: 200px }
     }
 }
+
+.edit-button {
+  border-color: $feature-border-color;
+  background-color: $feature-border-color;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+}
