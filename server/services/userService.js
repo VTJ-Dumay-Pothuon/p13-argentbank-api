@@ -29,7 +29,9 @@ module.exports.createUser = async serviceData => {
 
 module.exports.getUserProfile = async serviceData => {
   try {
-    const jwtToken = serviceData.headers.authorization.split('Bearer')[1].trim()
+    // Required in order to test requests with Swagger
+    const jwtToken = serviceData.headers.authorization.split('Bearer')[1] ? 
+    serviceData.headers.authorization.split('Bearer')[1].trim() : serviceData.headers.authorization
     const decodedJwtToken = jwt.decode(jwtToken)
     const user = await User.findOne({ _id: decodedJwtToken.id })
 
@@ -73,7 +75,9 @@ module.exports.loginUser = async serviceData => {
 
 module.exports.updateUserProfile = async serviceData => {
   try {
-    const jwtToken = serviceData.headers.authorization.split('Bearer')[1].trim()
+    // Required in order to test requests with Swagger
+    const jwtToken = serviceData.headers.authorization.split('Bearer')[1] ? 
+    serviceData.headers.authorization.split('Bearer')[1].trim() : serviceData.headers.authorization
     const decodedJwtToken = jwt.decode(jwtToken)
     const user = await User.findOneAndUpdate(
       { _id: decodedJwtToken.id },
